@@ -1,5 +1,5 @@
 import { Staker, StakingDayData } from "../generated/schema";
-import { BigInt, Address, ethereum, BigDecimal } from "@graphprotocol/graph-ts";
+import { BigInt, Address, ethereum } from "@graphprotocol/graph-ts";
 
 let ZERO_BI = BigInt.fromI32(0);
 

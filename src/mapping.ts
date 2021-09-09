@@ -18,6 +18,7 @@ let ZERO_BI = BigInt.fromI32(0);
 function getPerpStaking(): PerpStakingInfo {
   let perpStakingInfo = PerpStakingInfo.load("1");
   if (!perpStakingInfo) {
+    perpStakingInfo = new PerpStakingInfo("1");
     perpStakingInfo.totalStakedTokens = ZERO_BI;
     perpStakingInfo.totalWithdrawnTokens = ZERO_BI;
   }
@@ -35,7 +36,7 @@ export function handleStaked(event: StakedEvent): void {
   );
   stakeTx.staker = event.params.staker;
   stakeTx.amount = event.params.amount;
-  stakeTx.transactionHash = event.transaction.hash.toString();
+  stakeTx.transactionHash = event.transaction.hash.toHexString();
 
   // Update Staking Day Data
   let stakingDayData = getStakingDayData(event, event.params.staker);
@@ -48,6 +49,8 @@ export function handleStaked(event: StakedEvent): void {
 
   let perpStaking = getPerpStaking();
   perpStaking.totalStakedTokens = totalSupply;
+
+  perpStaking.save();
 
   stakeTx.save(); // Save the changes
   staker.save();
@@ -70,7 +73,7 @@ export function handleUnstaked(event: UnstakedEvent): void {
   unstakeTx.staker = event.params.staker;
   unstakeTx.amount = event.params.amount;
   unstakeTx.tokenUnlockTimestamp = event.block.timestamp.plus(cooldownPeriod);
-  unstakeTx.transactionHash = event.transaction.hash.toString();
+  unstakeTx.transactionHash = event.transaction.hash.toHexString();
 
   // Update Staking Day Data
   let stakingDayData = getStakingDayData(event, event.params.staker);
@@ -86,6 +89,7 @@ export function handleUnstaked(event: UnstakedEvent): void {
   staker.save();
   unstakeTx.save();
   stakingDayData.save();
+  perpStaking.save();
 }
 
 export function handleWithdrawn(event: WithdrawnEvent): void {
@@ -99,7 +103,7 @@ export function handleWithdrawn(event: WithdrawnEvent): void {
   );
   withdrawTx.staker = event.params.staker;
   withdrawTx.amount = event.params.amount;
-  withdrawTx.transactionHash = event.transaction.hash.toString();
+  withdrawTx.transactionHash = event.transaction.hash.toHexString();
 
   // Update Staking Day Data
   let stakingDayData = getStakingDayData(event, event.params.staker);
@@ -117,4 +121,5 @@ export function handleWithdrawn(event: WithdrawnEvent): void {
   staker.save();
   withdrawTx.save();
   stakingDayData.save();
+  perpStaking.save();
 }
