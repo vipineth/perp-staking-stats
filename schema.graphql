@@ -1,0 +1,41 @@
+type PerpStakingInfo @entity {
+  id: ID!
+  totalStakedTokens: BigInt! #amount of perp token
+  totalWithdrawnTokens: BigInt! # amount of perp token
+}
+
+type Staker @entity {
+  id: ID!
+  totalStaked: BigInt! #amount of perp token
+  totalWithdrawn: BigInt! # amount of perp token
+}
+
+type StakingDayData @entity {
+  id: ID!
+  totalStaked: BigInt! # amount of perp token
+  totalUnstaked: BigInt! # amount of perp token
+  totalWithdrawn: BigInt! # amount of perp token
+  date: BigInt! # date
+}
+
+type StakeTransaction @entity {
+  id: ID!
+  amount: BigInt! # amount of perp token
+  staker: Bytes! # address
+  transactionHash: String! # hash of transaction
+}
+
+type UnstakeTransaction @entity {
+  id: ID!
+  amount: BigInt! # amount of perp token
+  staker: Bytes! # address
+  tokenUnlockTimestamp: BigInt! # timestamp after cooldown period
+  transactionHash: String! # hash of transaction
+}
+
+type WithdrawTransaction @entity {
+  id: ID!
+  amount: BigInt! # amount of perp token
+  staker: Bytes! # address
+  transactionHash: String! # hash of transaction
+}
