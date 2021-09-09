@@ -1,4 +1,4 @@
-import { BigInt, BigDecimal } from "@graphprotocol/graph-ts";
+import { BigInt } from "@graphprotocol/graph-ts";
 import {
   Staked as StakedEvent,
   Unstaked as UnstakedEvent,
@@ -31,7 +31,7 @@ export function handleStaked(event: StakedEvent): void {
 
   // Update Staked Transaction
   let stakeTx = new StakeTransaction(
-    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+    event.transaction.hash.toHexString() + "-" + event.logIndex.toString()
   );
   stakeTx.staker = event.params.staker;
   stakeTx.amount = event.params.amount;
@@ -61,7 +61,7 @@ export function handleUnstaked(event: UnstakedEvent): void {
 
   // Upadte Unstake Transaction
   let unstakeTx = new UnstakeTransaction(
-    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+    event.transaction.hash.toHexString() + "-" + event.logIndex.toString()
   );
 
   let contract = PerpStakingContract.bind(event.address);
@@ -95,7 +95,7 @@ export function handleWithdrawn(event: WithdrawnEvent): void {
 
   // Update Withdraw Transaction
   let withdrawTx = new WithdrawTransaction(
-    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+    event.transaction.hash.toHexString() + "-" + event.logIndex.toString()
   );
   withdrawTx.staker = event.params.staker;
   withdrawTx.amount = event.params.amount;

@@ -26,18 +26,8 @@ dataSources:
         - name: PerpStaking
           file: ./abis/PerpStaking.json
       eventHandlers:
-        - event: Approval(indexed address,indexed address,uint256)
-          handler: handleApproval
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
-        - event: StakeModuleAdded(address)
-          handler: handleStakeModuleAdded
-        - event: StakeModuleRemoved(address)
-          handler: handleStakeModuleRemoved
         - event: Staked(address,uint256)
           handler: handleStaked
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
         - event: Unstaked(address,uint256)
           handler: handleUnstaked
         - event: Withdrawn(address,uint256)
