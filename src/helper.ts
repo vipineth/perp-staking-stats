@@ -21,18 +21,16 @@ export function getStakingDayData(
   let _staker = getStaker(trader);
   let timestamp = event.block.timestamp.toI32();
   let dayID = timestamp / 86400;
-  let id = _staker.id + "-" + dayID.toString();
 
-  let dayData = StakingDayData.load(id);
+  let dayData = StakingDayData.load(dayID.toString());
   let dayStartTimestamp = dayID * 86400;
 
   if (!dayData) {
-    dayData = new StakingDayData(id);
+    dayData = new StakingDayData(dayID.toString());
     dayData.date = BigInt.fromI32(dayStartTimestamp);
     dayData.totalStaked = ZERO_BI;
     dayData.totalUnstaked = ZERO_BI;
     dayData.totalWithdrawn = ZERO_BI;
-    dayData.save();
   }
   return dayData!;
 }
